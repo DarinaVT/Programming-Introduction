@@ -5,6 +5,9 @@ Console.WriteLine("Enter the capacity of the washing machine:");
 int WashingMachineCapacity = int.Parse(Console.ReadLine());
 int CleanPairs = 0;
 int ToWash = 0;
+int SinglesMatched = 0;
+int PairsFromDirtySocks = 0;
+
 
 // clean socks part
 Console.WriteLine("Enter the amount of clean socks:");
@@ -43,37 +46,43 @@ Array.Sort(DirtySocks);
 List<int> DirtySocksList = DirtySocks.ToList();
 
 // check with dirty and clean socks for maximum pairs
-while (ToWash < WashingMachineCapacity)
+
+for (int i = 0; i < CleanSocksList.Count && ToWash < WashingMachineCapacity; i++)
 {
-    bool foundMatch = false;
-
-    for (int i = 0; i < CleanSocksList.Count; i++)
+    for (int j = 0; j < DirtySocksList.Count; j++)
     {
-        for (int j = 0; j < DirtySocksList.Count; j++)
+        if (CleanSocksList[i] == DirtySocksList[j])
         {
-            if (CleanSocksList[i] == DirtySocksList[j])
-            {
-                CleanSocksList.RemoveAt(i);
-                DirtySocksList.RemoveAt(j);
-
-                ToWash++;
-                foundMatch = true;
-                i--;
-                break;
-            }
-        }
-
-        if (foundMatch)
-        {
+            CleanSocksList.RemoveAt(i);
+            DirtySocksList.RemoveAt(j);
+            ToWash++;
+            SinglesMatched++;
+            i--;
             break;
         }
     }
-
-    if (!foundMatch)
+    if (DirtySocksList.Count == 0)
     {
-        Console.WriteLine("No more matching socks to wash");
         break;
     }
 }
 
-Console.WriteLine($"Bob can take the maximum of {CleanPairs + ToWash} clean pairs");
+for (int i = 0; i < DirtySocksList.Count - 1 && ToWash + 2 <= WashingMachineCapacity;)
+{
+    if (DirtySocksList[i] == DirtySocksList[i + 1])
+    {
+        ToWash += 2;
+        PairsFromDirtySocks++;
+        DirtySocksList.RemoveAt(i + 1);
+        DirtySocksList.RemoveAt(i);
+    }
+    else
+    {
+        i++;
+    }
+    if (DirtySocksList.Count == 0)
+    {
+        break;
+    }
+}
+Console.WriteLine($"Bob can take the maximum of {CleanPairs + SinglesMatched + PairsFromDirtySocks} clean pairs.");
