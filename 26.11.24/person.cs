@@ -46,7 +46,9 @@ class Program
         }
 
         string personTextFile = "person.txt";
-        string personBinaryFile = "binary.txt";
+        string personBinaryFile = "binary.bin";
+        string binaryStringFile = "binary.txt";
+
         StreamWriter writer = new StreamWriter(personTextFile);
         foreach (var person in people)
         {
@@ -59,12 +61,19 @@ class Program
         File.WriteAllBytes(personBinaryFile, binaryFileContent);
 
         byte[] binaryContent = File.ReadAllBytes(personBinaryFile);
-        StreamWriter binaryWriter = new StreamWriter(personBinaryFile);
+        StreamWriter binaryWriter = new StreamWriter(binaryStringFile);
         foreach (byte b in binaryContent)
         {
             binaryWriter.Write(Convert.ToString(b, 2).PadLeft(8, '0') + " ");
         }
         binaryWriter.Close();
-        Console.WriteLine($"File was saved to: {Path.GetFullPath(personBinaryFile)}");
+
+        string binaryTextContent = File.ReadAllText(binaryStringFile);
+        Console.WriteLine("\nContent of binary.txt:");
+        Console.WriteLine(binaryTextContent);
+
+        Console.WriteLine($"\nText file saved to: {Path.GetFullPath(personTextFile)}");
+        Console.WriteLine($"Binary file saved to: {Path.GetFullPath(personBinaryFile)}");
+        Console.WriteLine($"Binary string representation saved to: {Path.GetFullPath(binaryStringFile)}");
     }
 }
