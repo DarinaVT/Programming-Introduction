@@ -1,5 +1,5 @@
-string firstFile = @"D:\filetoread - Copy.txt";
-string secondFile = @"D:\filetoread.txt";
+string firstFile = Console.ReadLine();
+string secondFile = Console.ReadLine();
 
 byte[] firstFileBytes = File.ReadAllBytes(firstFile);
 byte[] secondFileBytes = File.ReadAllBytes(secondFile);
