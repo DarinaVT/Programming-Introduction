@@ -1,7 +1,7 @@
 using System.Reflection.PortableExecutable;
 Console.WriteLine("Enter a file and its directory");
 string userFile = Console.ReadLine();
-string userFileInfo = @"..\..\..\..\userFileInfo.txt";
+string userFileInfo = @"userFileInfo.txt";
 int wordsAmount = 0;
 int sentencesAmount = 0;
 int lineNumber = 0;
